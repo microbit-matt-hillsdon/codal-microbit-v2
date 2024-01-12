@@ -59,10 +59,7 @@ const main = (mode) => {
     result = result.replace(/https:\/\/microbit.org\/dl\/\d\//g, "./");
     for (const trailerName of trailers) {
       const trailer = fs.readFileSync(trailerName);
-      const htmlName = trailerName.replace(
-        /\.txt$/,
-        `${mode === "default" ? "-default" : "-nextgen"}.html`
-      );
+      const htmlName = trailerName.replace(/\.txt$/, `-${mode}.html`);
       fs.writeFileSync(
         htmlName,
         Buffer.concat([Buffer.from(result, { encoding: "utf-8" }), trailer])
