@@ -15,22 +15,30 @@
       w.dl = {
         mode: "nextgen",
         load: function () {},
+        handleBootstrapError: function () {
+          function showError() {
+            document.querySelector("#v").innerText =
+              "An error occurred loading the page. Please check your internet connection and reopen this file.";
+          }
+          if (document.readyState !== "loading") {
+            showError();
+          } else {
+            document.addEventListener("DOMContentLoaded", showError);
+          }
+        },
       };
       // Required as the code that grabs the data expects a prior occurence of
       // the quoted string
       const a = "FS_START";
     </script>
-    <base href="https://stage-data.microbit.org" />
-    <script src="bootstrap.js"></script>
+    <base href="@@BASE@@" />
+    <script
+      onerror="window.dl.handleBootstrapError()"
+      src="bootstrap.js"
+    ></script>
     <title>micro:bit data log</title>
   </head>
   <body>
     <div id="w">
       <h1>micro:bit data log</h1>
-      <p id="v">
-        You are offline. Please check your internet connection and reopen this
-        file.
-      </p>
-    </div>
-  </body>
-</html>
+      <p id="v">Loading…</p>
