@@ -7,8 +7,7 @@ const minify = require("html-minifier").minify;
 const fs = require("fs");
 
 const main = (mode) => {
-  const inputFile =
-    mode === "default" ? "default-header.html" : "nextgen-header.html";
+  const inputFile = `${mode}-header.html`;
   const input = fs.readFileSync(inputFile, { encoding: "ascii" });
   const delimiter = "<!--FS_START";
   let result = minify(input, {
@@ -60,10 +59,7 @@ const main = (mode) => {
     result = result.replace(/https:\/\/microbit.org\/dl\/\d\//g, "./");
     for (const trailerName of trailers) {
       const trailer = fs.readFileSync(trailerName);
-      const htmlName = trailerName.replace(
-        /\.txt$/,
-        `${mode === "default" ? "-default" : "-nextgen"}.html`
-      );
+      const htmlName = trailerName.replace(/\.txt$/, `-${mode}.html`);
       fs.writeFileSync(
         htmlName,
         Buffer.concat([Buffer.from(result, { encoding: "utf-8" }), trailer])
@@ -77,10 +73,9 @@ const main = (mode) => {
     const arrayContents = Array.from(result)
       .map((c) => "0x" + c.charCodeAt(0).toString(16))
       .join(",");
-    const headerRegExp =
-      mode === "default"
-        ? /(MicroBitLog::header\[2048\] = \/\*default\*\/)\{[^}]*\}/
-        : /(MicroBitLog::header\[2048\] = \/\*nextgen\*\/)\{[^}]*\}/;
+    const headerRegExp = new RegExp(
+      `(MicroBitLog::header\\[2048\\] = \\/\\*${mode}\\*\\/)\\{[^}]*\\}`
+    );
     if (!headerRegExp.test(cppContents)) {
       throw new Error(`Could not find header. Review changes to ${cppFile}.`);
     }
@@ -89,6 +84,6 @@ const main = (mode) => {
   }
 };
 
-for (const mode of ["default", "nextgen"]) {
+for (const mode of ["default", "basic", "nextgen"]) {
   main(mode);
 }
