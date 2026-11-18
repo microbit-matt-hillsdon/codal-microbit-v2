@@ -46,7 +46,7 @@ The data logging storage is composed like this:
 ```
 
 For each sample file, `npm run test` script creates a HTML file with each of
-the three header formats. These correspond to the three `MICROBIT_LOG_MODE`
+the four header formats. These correspond to the four `MICROBIT_LOG_MODE`
 define values documented in [MicroBitConfig.h](../../inc/MicroBitLog.h).
 
 Some of the sample trailers have an equivalent JavaScript file with the source

@@ -333,6 +333,7 @@
 // 0: data.microbit.org data logging experience
 // 1: basic experience supported by dl.js in this repository hosted on microbit.org
 // 2: "BBC micro:bit - the next gen" playground survey experience (this requires a specific HEX to generate the relevant data format)
+// 3: data tool experience (the same log data as mode 0, marked for a different display)
 #ifndef MICROBIT_LOG_MODE
     #define MICROBIT_LOG_MODE    0
 #endif

@@ -94,6 +94,6 @@ const main = (mode) => {
   }
 };
 
-for (const mode of ["default", "basic", "nextgen"]) {
+for (const mode of ["default", "basic", "nextgen", "datatool"]) {
   main(mode);
 }
